@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source $PWD/env.sh
-source $PWD/os_rc.sh
+source $PWD/os-openrc.sh
 
 # Create the service entity for the Identity service
 openstack service create --name keystone --description "OpenStack Identity" identity
@@ -39,7 +39,7 @@ openstack role create user
 # Add the user role to the demo project and user
 openstack role add --project demo --user demo user
 
-cat <<EOF >$PWD/admin_rc.sh
+cat <<EOF >$PWD/admin-openrc.sh
 #!/bin/bash
 
 export OS_PROJECT_DOMAIN_NAME=default
@@ -52,7 +52,7 @@ export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
 EOF
 
-cat <<EOF >$PWD/admin_rc.sh
+cat <<EOF >$PWD/admin-openrc.sh
 #!/bin/bash
 
 export OS_PROJECT_DOMAIN_NAME=default

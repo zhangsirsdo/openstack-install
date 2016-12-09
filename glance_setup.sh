@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source $PWD/env.sh
-source $PWD/admin_rc.sh
+source $PWD/admin-openrc.sh
 
 # Create the glance user
 openstack user create --domain default --password $GLANCE_PASS glance

@@ -52,7 +52,7 @@ EOF
 systemctl enable httpd.service
 systemctl start httpd.service
 
-cat <<EOF >$PWD/os_rc.sh
+cat <<EOF >$PWD/os-openrc.sh
 #!/bin/bash
 
 export OS_TOKEN=$ADMIN_TOKEN
