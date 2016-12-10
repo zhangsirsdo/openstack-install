@@ -1,6 +1,31 @@
 #!/bin/bash
 
 source $PWD/env.sh
+source $PWD/admin-openrc.sh
+
+# Create the nova user
+openstack user create --domain default --password $NOVA_PASS  nova
+
+# Add the admin role to the nova user:
+openstack role add --project service --user nova admin
+
+# Create the nova service entity:
+openstack service create --name nova --description "OpenStack Compute" compute
+
+# Create the Compute service API endpoints:
+openstack endpoint create --region RegionOne \
+        compute public http://controller:8774/v2.1/%\(tenant_id\)s
+openstack endpoint create --region RegionOne \
+        compute internal http://controller:8774/v2.1/%\(tenant_id\)s
+openstack endpoint create --region RegionOne \
+          compute admin http://controller:8774/v2.1/%\(tenant_id\)s
+
+
+# config
+
+# database
+openstack-config --set /etc/nova/nova.conf api_database connection "mysql+pymysql://nova:$NOVA_DBPASS@localhost/nova_api"
+openstack-config --set /etc/nova/nova.conf database connection "mysql+pymysql://nova:$NOVA_DBPASS@localhost/nova"
 
 # rabbit
 openstack-config --set /etc/nova/nova.conf DEFAULT rpc_backend "rabbit"
@@ -26,18 +51,25 @@ openstack-config --set /etc/nova/nova.conf DEFAULT use_neutron "True"
 openstack-config --set /etc/nova/nova.conf DEFAULT firewall_driver "nova.virt.firewall.NoopFirewallDriver"
 
 # vnc
-openstack-config --set /etc/nova/nova.conf vnc enabled "True"
 openstack-config --set /etc/nova/nova.conf vnc vncserver_listen "controller"
 openstack-config --set /etc/nova/nova.conf vnc vncserver_proxyclient_address "controller"
-openstack-config --set /etc/nova/nova.conf vnc novncproxy_base_url "http://controller:6080/vnc_auto.html"
 
 # glance
 openstack-config --set /etc/nova/nova.conf glance api_servers "http://controller:9292"
 
 # misc
 openstack-config --set /etc/nova/nova.conf oslo_concurrency lock_path "/var/lib/nova/tmp"
-egrep -c '(vmx|svm)' /proc/cpuinfo || openstack-config --set /etc/nova/nova.conf libvirt virt_type "qemu"
+
+# Populate the Compute databases:
+su -s /bin/sh -c "nova-manage api_db sync" nova
+su -s /bin/sh -c "nova-manage db sync" nova
+
 
 # Start the Compute services and configure them to start when the system boots:
-systemctl enable libvirtd.service openstack-nova-compute.service
-systemctl start libvirtd.service openstack-nova-compute.service
+
+systemctl enable openstack-nova-api.service \
+          openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+          openstack-nova-conductor.service openstack-nova-novncproxy.service
+systemctl start openstack-nova-api.service \
+          openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+          openstack-nova-conductor.service openstack-nova-novncproxy.service
