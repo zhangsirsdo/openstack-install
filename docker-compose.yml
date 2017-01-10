@@ -6,8 +6,8 @@ keystone:
     #    - mysql
     net: "host"
     volumes:
-        - /home/zsz/keystone/config.sh:/home/config.sh
-        - /home/zsz/keystone/keystone.conf:/etc/keystone/keystone.conf
+        - /home/openstack-install/keystone/config.sh:/home/config.sh
+        - /home/openstack-install/keystone/keystone.conf:/etc/keystone/keystone.conf
 
 mysql:
     image: "mysql:latest"
@@ -17,7 +17,7 @@ mysql:
     environment:
         - MYSQL_ROOT_PASSWORD=redhat
     volumes:
-        - /home/zsz/mysql/config.sh:/home/config.sh
+        - /home/openstack-install/mysql/config.sh:/home/config.sh
 
 mongodb:
     image: 'mongodb_test:1'
@@ -27,7 +27,7 @@ mongodb:
     #    - mysql
     net: "host"
     volumes:
-        - /home/zsz/mongodb/mongod.conf:/etc/mongod.conf
+        - /home/openstack-install/mongodb/mongod.conf:/etc/mongod.conf
 
 ceilometer_api:
     image: 'ceilometer_api_test:1'
@@ -37,7 +37,7 @@ ceilometer_api:
     #    - mysql
     net: "host"
     volumes:
-        - /home/zsz/ceilometer-api/ceilometer.conf:/etc/ceilometer/ceilometer.conf
+        - /home/openstack-install/ceilometer-api/ceilometer.conf:/etc/ceilometer/ceilometer.conf
 
 ceilometer_central:
     image: 'ceilometer_central_test:1'
@@ -47,7 +47,7 @@ ceilometer_central:
     #    - mysql
     net: "host"
     volumes:
-        - /home/zsz/ceilometer-central/ceilometer.conf:/etc/ceilometer/ceilometer.conf
+        - /home/openstack-install/ceilometer-central/ceilometer.conf:/etc/ceilometer/ceilometer.conf
 
 ceilometer_collector:
     image: 'ceilometer_collector_test:1'
@@ -57,7 +57,7 @@ ceilometer_collector:
     #    - mysql
     net: "host"
     volumes:
-        - /home/zsz/ceilometer-collector/ceilometer.conf:/etc/ceilometer/ceilometer.conf
+        - /home/openstack-install/ceilometer-collector/ceilometer.conf:/etc/ceilometer/ceilometer.conf
 
 ceilometer_notification:
     image: 'ceilometer_notification_test:1'
@@ -67,7 +67,7 @@ ceilometer_notification:
     #    - mysql
     net: "host"
     volumes:
-        - /home/zsz/ceilometer-notification/ceilometer.conf:/etc/ceilometer/ceilometer.conf
+        - /home/openstack-install/ceilometer-notification/ceilometer.conf:/etc/ceilometer/ceilometer.conf
 
 
 
