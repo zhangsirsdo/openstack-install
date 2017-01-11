@@ -5,19 +5,37 @@ keystone:
     #links:
     #    - mysql
     net: "host"
-    volumes:
-        - /home/openstack-install/keystone/config.sh:/home/config.sh
-        - /home/openstack-install/keystone/keystone.conf:/etc/keystone/keystone.conf
+    environment:
+        - MYSQL_IP=10.229.43.217
+        - CONTROLLER=10.229.43.217
+        - OS_TOKEN=016f77abde58da9c724b
+        - OS_IDENTITY_API_VERSION=3
+        - OS_URL=http://10.229.43.217:35357/v3
+        - KEYSTONE_DBPASS=redhat
+        - ADMIN_TOKEN=016f77abde58da9c724b
+        - ADMIN_PASS=redhat
+        - DEMO_PASS=redhat
+        - CEILOMETER_PASS=redhat
+        - GLANCE_PASS=redhat
 
-mysql:
-    image: "mysql:latest"
+mariadb:
+    image: "mariadb_test:1"
     net: "host"
     #expose:
     #    - "3306"
     environment:
+        - INIT_DB=True
+        - BIND_ADDRESS=10.229.43.217
         - MYSQL_ROOT_PASSWORD=redhat
-    volumes:
-        - /home/openstack-install/mysql/config.sh:/home/config.sh
+        - DB_PASS=redhat
+        - KEYSTONE_DBPASS=redhat
+        - GLANCE_DBPASS=redhat
+        - NOVA_DBPASS=redhat
+        - NEUTRON_DBPASS=redhat
+        - CINDER_DBPASS=redhat
+        - MANILA_DBPASS=redhat
+        - HEAT_DBPASS=redhat
+        - TROVE_DBPASS=redhat
 
 mongodb:
     image: 'mongodb_test:1'
