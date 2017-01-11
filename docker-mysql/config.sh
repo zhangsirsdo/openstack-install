@@ -1,5 +1,0 @@
-#!/bin/bash
-
-CONTROLLER=10.229.43.217
-MYSQL_IP=10.229.43.217
-PWD=/home

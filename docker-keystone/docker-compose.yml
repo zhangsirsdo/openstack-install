@@ -5,37 +5,15 @@ keystone:
     #links:
     #    - mysql
     net: "host"
-    volumes:
-        - /home/zsz/keystone/config.sh:/home/config.sh
-        - /home/zsz/keystone/keystone.conf:/etc/keystone/keystone.conf
-
-mysql:
-    image: "mysql:latest"
-    net: "host"
-    #expose:
-    #    - "3306"
     environment:
-        - MYSQL_ROOT_PASSWORD=redhat
-    volumes:
-        - /home/zsz/mysql/config.sh:/home/config.sh
-
-mongodb:
-    image: 'mongodb_test:1'
-    #ports:
-    #    - "8880:80"
-    #links:
-    #    - mysql
-    net: "host"
-    volumes:
-        - /home/zsz/mongodb/mongod.conf:/etc/mongod.conf
-
-ceilometer-api:
-    image: 'ceilometer_api_test:1'
-    #ports:
-    #    - "8880:80"
-    #links:
-    #    - mysql
-    net: "host"
-    volumes:
-        - /home/zsz/ceilometer-api/ceilometer.conf:/etc/ceilometer/ceilometer.conf
-
+        - MYSQL_IP=10.229.43.217
+        - CONTROLLER=10.229.43.217
+        - OS_TOKEN=016f77abde58da9c724b
+        - OS_IDENTITY_API_VERSION=3
+        - OS_URL=http://10.229.43.217:35357/v3
+        - KEYSTONE_DBPASS=redhat
+        - ADMIN_TOKEN=016f77abde58da9c724b
+        - ADMIN_PASS=redhat
+        - DEMO_PASS=redhat
+        - CEILOMETER_PASS=redhat
+        - GLANCE_PASS=redhat
