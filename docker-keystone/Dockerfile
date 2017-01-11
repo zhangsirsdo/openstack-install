@@ -1,16 +1,12 @@
 FROM centos:7
 
 ADD ./CentOS7-Base-163.repo /etc/yum.repos.d/CentOS-Base.repo
-ADD ./env.sh /home/env.sh
-ADD ./keystone_install.sh /home/keystone_install.sh
+ADD ./keystone_init.sh /home/keystone_init.sh
 ADD ./keystone_setup.sh /home/keystone_setup.sh
-ADD ./os-openrc.sh /home/os-openrc.sh
-ADD ./setup.sh /home/setup.sh
 
 RUN yum clean all
 RUN yum makecache
 
 RUN yum install -y openstack-keystone openstack-utils python-openstackclient
 
-CMD keystone-all --config-file /etc/keystone/keystone.conf
-
+CMD sh /home/keystone_setup.sh
