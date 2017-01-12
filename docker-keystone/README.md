@@ -10,5 +10,13 @@
 
  - keystone_init.sh  
    keystone容器初始化脚本。待容器启动之后，需要进入到容器中，执行该脚本，完成keystone初始化。  
-   进入指定容器：docker exec -it &lt;container id&gt; bash  
-   初始化keystone：sh /home/keystone_init.sh  
+### 使用说明
+ - 构建镜像  
+   进入到该目录下，执行docker build -t keystone_test:1 .  
+
+ - 启动容器  
+   进入到该目录下，执行docker-compose up  
+
+ - mariadb初始化  
+   容器启动之后，执行初始化脚本  
+   docker exec -it &lt;container id&gt; sh /home/keystone_init.sh
