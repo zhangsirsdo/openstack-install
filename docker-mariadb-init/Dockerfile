@@ -6,6 +6,6 @@ ADD ./mariadb_init.sh /home/mariadb_init.sh
 RUN yum clean all
 RUN yum makecache
 
-RUN yum install -y mariadb mariadb-server python2-PyMySQL
+RUN yum install -y mariadb 
 
 CMD sh /home/mariadb_init.sh
