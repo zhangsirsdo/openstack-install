@@ -1,6 +1,6 @@
 FROM centos:7
 
-ADD ./CentOS7-Base-163.repo /etc/yum.repos.d/CentOS-Base.repo
+ADD ./CentOS7-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 ADD ./setup.sh /home/setup.sh
 
 RUN yum clean all
