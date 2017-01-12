@@ -6,11 +6,9 @@ keystone:
     #    - mysql
     net: "host"
     environment:
+        - KEYSTONE_INIT=True
         - MYSQL_IP=10.229.43.217
         - CONTROLLER=10.229.43.217
-        - OS_TOKEN=016f77abde58da9c724b
-        - OS_IDENTITY_API_VERSION=3
-        - OS_URL=http://10.229.43.217:35357/v3
         - KEYSTONE_DBPASS=redhat
         - ADMIN_TOKEN=016f77abde58da9c724b
         - ADMIN_PASS=redhat
