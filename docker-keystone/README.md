@@ -10,5 +10,5 @@
 
  - keystone_init.sh  
    keystone容器初始化脚本。待容器启动之后，需要进入到容器中，执行该脚本，完成keystone初始化。  
-   进入指定容器：docker exec -it <container id> bash  
+   进入指定容器：docker exec -it &lt;container id&gt; bash  
    初始化keystone：sh /home/keystone_init.sh  
