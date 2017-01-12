@@ -24,6 +24,7 @@ services:
         - MANILA_DBPASS=redhat
         - HEAT_DBPASS=redhat
         - TROVE_DBPASS=redhat
+
   keystone:
     image: 'keystone_test:1'
     #ports:
