@@ -1,6 +1,6 @@
 FROM centos:7
 
-ADD ./CentOS7-Base-163.repo /etc/yum.repos.d/CentOS-Base.repo
+ADD ./CentOS7-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 ADD ./keystone_init.sh /home/keystone_init.sh
 ADD ./keystone_install.sh /home/keystone_install.sh
 
