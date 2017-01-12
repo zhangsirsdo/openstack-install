@@ -1,10 +1,36 @@
-keystone:
+version: '2'
+services:
+  mariadb:
+    image: 'mariadb:latest'
+    network_mode: "host"
+    environment:
+        - MYSQL_ROOT_PASSWORD=redhat
+
+  mariadbinit:
+    image: 'mariadbinit:latest'
+    #ports:
+    #    - "8880:80"
+    links:
+        - mariadb
+    environment:
+        - MARIADB_INIT=True
+        - MYSQL_IP=10.229.43.217
+        - DB_PASS=redhat
+        - KEYSTONE_DBPASS=redhat
+        - GLANCE_DBPASS=redhat
+        - NOVA_DBPASS=redhat
+        - NEUTRON_DBPASS=redhat
+        - CINDER_DBPASS=redhat
+        - MANILA_DBPASS=redhat
+        - HEAT_DBPASS=redhat
+        - TROVE_DBPASS=redhat
+  keystone:
     image: 'keystone_test:1'
     #ports:
     #    - "8880:80"
     #links:
     #    - mysql
-    net: "host"
+    network_mode: "host"
     environment:
         - KEYSTONE_INIT=True
         - MYSQL_IP=10.229.43.217
@@ -16,72 +42,53 @@ keystone:
         - CEILOMETER_PASS=redhat
         - GLANCE_PASS=redhat
 
-mariadb:
-    image: "mariadb_test:1"
-    net: "host"
-    #expose:
-    #    - "3306"
-    environment:
-        - INIT_DB=True
-        - BIND_ADDRESS=10.229.43.217
-        - MYSQL_ROOT_PASSWORD=redhat
-        - DB_PASS=redhat
-        - KEYSTONE_DBPASS=redhat
-        - GLANCE_DBPASS=redhat
-        - NOVA_DBPASS=redhat
-        - NEUTRON_DBPASS=redhat
-        - CINDER_DBPASS=redhat
-        - MANILA_DBPASS=redhat
-        - HEAT_DBPASS=redhat
-        - TROVE_DBPASS=redhat
-
-mongodb:
+  mongodb:
     image: 'mongodb_test:1'
     #ports:
     #    - "8880:80"
     #links:
     #    - mysql
-    net: "host"
+    network_mode: "host"
     volumes:
         - /home/openstack-install/mongodb/mongod.conf:/etc/mongod.conf
 
-ceilometer_api:
+  ceilometer_api:
     image: 'ceilometer_api_test:1'
     #ports:
     #    - "8880:80"
     #links:
     #    - mysql
-    net: "host"
+    network_mode: "host"
     volumes:
         - /home/openstack-install/ceilometer-api/ceilometer.conf:/etc/ceilometer/ceilometer.conf
 
-ceilometer_central:
+  ceilometer_central:
     image: 'ceilometer_central_test:1'
     #ports:
     #    - "8880:80"
     #links:
     #    - mysql
-    net: "host"
+    network_mode: "host"
     volumes:
         - /home/openstack-install/ceilometer-central/ceilometer.conf:/etc/ceilometer/ceilometer.conf
 
-ceilometer_collector:
+  ceilometer_collector:
     image: 'ceilometer_collector_test:1'
     #ports:
     #    - "8880:80"
     #links:
     #    - mysql
-    net: "host"
+    network_mode: "host"
     volumes:
         - /home/openstack-install/ceilometer-collector/ceilometer.conf:/etc/ceilometer/ceilometer.conf
 
-ceilometer_notification:
+  ceilometer_notification:
     image: 'ceilometer_notification_test:1'
     #ports:
     #    - "8880:80"
     #links:
     #    - mysql
-    net: "host"
+    network_mode: "host"
     volumes:
         - /home/openstack-install/ceilometer-notification/ceilometer.conf:/etc/ceilometer/ceilometer.conf
 
