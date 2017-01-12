@@ -6,6 +6,7 @@ keystone:
     #    - mysql
     net: "host"
     environment:
+        - KEYSTONE_INIT=True
         - MYSQL_IP=10.229.43.217
         - CONTROLLER=10.229.43.217
         - KEYSTONE_DBPASS=redhat
