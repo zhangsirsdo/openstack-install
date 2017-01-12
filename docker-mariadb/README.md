@@ -1,5 +1,5 @@
 ### 文件说明
- - CentOS7-Base-163.repo  
+ - CentOS7-Base.repo  
    163的repo文件，用于下载openstack组件安装包  
 
  - Dockerfile  
