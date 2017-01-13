@@ -1,20 +1,15 @@
 #!/bin/bash
 
 ADMIN_TOKEN=${ADMIN_TOKEN:=016f77abde58da9c724b}
-CONTROLLER=${CONTROLLER:=10.229.43.217}
+ENDPOINT=${ENDPOINT:=127.0.0.1}
 ADMIN_PASS=${ADMIN_PASS:=redhat}
 DEMO_PASS=${DEMO_PASS:=$ADMIN_PASS}
 CEILOMETER_PASS=${CEILOMETER_PASS:=redhat}
 GLANCE_PASS=${GLANCE_PASS:=$CEILOMETER_PASS}
 
-cat <<EOF >/home/os-openrc.sh
-#!/bin/bash
-export OS_TOKEN=$ADMIN_TOKEN
-export OS_URL=http://$CONTROLLER:35357/v3
-export OS_IDENTITY_API_VERSION=3
-EOF
-
-source /home/os-openrc.sh
+OS_TOKEN=$ADMIN_TOKEN
+OS_URL=http://$ENDPOINT:35357/v3
+OS_IDENTITY_API_VERSION=3
 
 #keystone:
 # Create the service entity for the Identity service
@@ -26,9 +21,9 @@ openstack service create --name keystone --description "OpenStack Identity" iden
 #
 # In a production environment, the variants might reside on separate networks that service 
 # different types of users for security reasons. 
-openstack endpoint create --region RegionOne identity public http://$CONTROLLER:5000/v3
-openstack endpoint create --region RegionOne identity internal http://$CONTROLLER:5000/v3
-openstack endpoint create --region RegionOne identity admin http://$CONTROLLER:35357/v3
+openstack endpoint create --region RegionOne identity public http://$ENDPOINT:5000/v3
+openstack endpoint create --region RegionOne identity internal http://$ENDPOINT:5000/v3
+openstack endpoint create --region RegionOne identity admin http://$ENDPOINT:35357/v3
 # Create the default domain
 openstack domain create --description "Default Domain" default
 
@@ -51,19 +46,4 @@ openstack role create user
 # Add the user role to the demo project and user
 openstack role add --project demo --user demo user
 
-#ceilometer:
-openstack user create --domain default --password $CEILOMETER_PASS ceilometer
-openstack role add --project service --user ceilometer admin
-openstack service create --name ceilometer --description "Telemetry" metering
-openstack endpoint create --region RegionOne metering public http://$CONTROLLER:8777
-openstack endpoint create --region RegionOne metering internal http://$CONTROLLER:8777
-openstack endpoint create --region RegionOne metering admin http://$CONTROLLER:8777
-
-#glance
-openstack user create --domain default --password $GLANCE_PASS glance
-openstack role add --project service --user glance admin
-openstack service create --name glance --description "OpenStack Image" image
-openstack endpoint create --region RegionOne image public http://$CONTROLLER:9292
-openstack endpoint create --region RegionOne image internal http://$CONTROLLER:9292
-openstack endpoint create --region RegionOne image admin http://$CONTROLLER:9292
 
