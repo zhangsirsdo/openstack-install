@@ -13,7 +13,7 @@ openstack-config --set /etc/keystone/keystone.conf DEFAULT log_date_format "%Y-%
 openstack-config --set /etc/keystone/keystone.conf token provider fernet
 openstack-config --set /etc/keystone/keystone.conf database connection "mysql+pymysql://keystone:$KEYSTONE_DB_PASS@$DB_HOST/keystone"
 
-res=`mysql -h $DB_HOST -u$DB_USER -p$DB_PASS -P$DB_PORT -e "select COUNT(*) from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA='keystone' and TABLE_NAME='endpointttt';"`
+res=`mysql -h $DB_HOST -u$DB_USER -p$DB_PASS -P$DB_PORT -e "select COUNT(*) from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA='keystone' and TABLE_NAME='endpoint';"`
 count=`echo $res|awk -F ' ' '{print $2}'`
 
 if [ "$count" -eq 0 ];then
