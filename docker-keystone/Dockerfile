@@ -1,12 +1,8 @@
-FROM centos:7
-
-ADD ./CentOS7-Base.repo /etc/yum.repos.d/CentOS-Base.repo
-ADD ./keystone_init.sh /home/keystone_init.sh
-ADD ./keystone_install.sh /home/keystone_install.sh
-
-RUN yum clean all
-RUN yum makecache
+FROM centos:base
 
 RUN yum install -y openstack-keystone openstack-utils python-openstackclient
 
-CMD sh /home/keystone_install.sh
+ADD ./keystone_install.sh /home/keystone_install.sh
+RUN chmod 755 /home/keystone_install.sh
+
+CMD ["/sbin/dumb-init","/home/keystone_install.sh"]

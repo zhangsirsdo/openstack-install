@@ -1,11 +1,8 @@
-FROM centos:7
+FROM centos:base
 
-ADD ./CentOS7-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 ADD ./mariadb_init.sh /home/mariadb_init.sh
-
-RUN yum clean all
-RUN yum makecache
+RUN chmod 755 /home/mariadb_init.sh
 
 RUN yum install -y mariadb 
 
-CMD sh /home/mariadb_init.sh
+CMD ["/sbin/dumb-init","/home/mariadb_init.sh"]

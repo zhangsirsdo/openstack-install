@@ -6,38 +6,41 @@ services:
     environment:
         - MYSQL_ROOT_PASSWORD=redhat
 
-  mariadbinit:
-    image: 'mariadbinit:latest'
+  mariadb_init:
+    image: 'mariadb_init:latest'
     #ports:
     #    - "8880:80"
     links:
         - mariadb
     environment:
-        - MARIADB_INIT=True
-        - MYSQL_IP=10.229.43.217
+        - DB_HOST=10.229.43.217
+        - DB_PORT=3306
+        - DB_USER=root
         - DB_PASS=redhat
-        - KEYSTONE_DBPASS=redhat
-        - GLANCE_DBPASS=redhat
-        - NOVA_DBPASS=redhat
-        - NEUTRON_DBPASS=redhat
-        - CINDER_DBPASS=redhat
-        - MANILA_DBPASS=redhat
-        - HEAT_DBPASS=redhat
-        - TROVE_DBPASS=redhat
+        - KEYSTONE_DB_PASS=redhat
+        - GLANCE_DB_PASS=redhat
+        - NOVA_DB_PASS=redhat
+        - NEUTRON_DB_PASS=redhat
+        - CINDER_DB_PASS=redhat
 
   keystone:
-    image: 'keystone_test:1'
-    #ports:
-    #    - "8880:80"
-    #links:
-    #    - mysql
+    image: 'keystone:1'
     network_mode: "host"
     environment:
-        - KEYSTONE_INIT=True
-        - MYSQL_IP=10.229.43.217
-        - CONTROLLER=10.229.43.217
-        - KEYSTONE_DBPASS=redhat
         - ADMIN_TOKEN=016f77abde58da9c724b
+        - KEYSTONE_DB_PASS=redhat
+        - DB_HOST=10.229.43.217
+        - KEYSTONE_INIT=True
+        - CONTROLLER=10.229.43.217
+        - ADMIN_PASS=redhat
+        - DEMO_PASS=redhat
+  keystone_init:
+    image: 'keystone_init:1'
+    links:
+        - keystone
+    environment:
+        - ADMIN_TOKEN=016f77abde58da9c724b
+        - CONTROLLER=10.229.43.217
         - ADMIN_PASS=redhat
         - DEMO_PASS=redhat
         - CEILOMETER_PASS=redhat
