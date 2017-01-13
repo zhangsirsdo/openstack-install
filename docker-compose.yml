@@ -28,23 +28,20 @@ services:
     network_mode: "host"
     environment:
         - ADMIN_TOKEN=016f77abde58da9c724b
-        - KEYSTONE_DB_PASS=redhat
+        - KEYSTONE_DB_PASS=root
         - DB_HOST=10.229.43.217
-        - KEYSTONE_INIT=True
-        - CONTROLLER=10.229.43.217
-        - ADMIN_PASS=redhat
-        - DEMO_PASS=redhat
-  keystone_init:
-    image: 'keystone_init:1'
+        - DB_PORT=3306
+        - DB_USER=root
+        - DB_PASS=root
+  keystone_setup:
+    image: 'keystone_setup:1'
     links:
         - keystone
     environment:
         - ADMIN_TOKEN=016f77abde58da9c724b
-        - CONTROLLER=10.229.43.217
-        - ADMIN_PASS=redhat
-        - DEMO_PASS=redhat
-        - CEILOMETER_PASS=redhat
-        - GLANCE_PASS=redhat
+        - ADVERTISEMENT=10.229.43.217
+        - ADMIN_PASS=root
+        - DEMO_PASS=root
 
   mongodb:
     image: 'mongodb_test:1'

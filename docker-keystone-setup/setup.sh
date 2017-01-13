@@ -1,14 +1,12 @@
 #!/bin/bash
 
 ADMIN_TOKEN=${ADMIN_TOKEN:=016f77abde58da9c724b}
-ENDPOINT=${ENDPOINT:=127.0.0.1}
-ADMIN_PASS=${ADMIN_PASS:=redhat}
+ADVERTISEMENT=${ADVERTISEMENT:=127.0.0.1}
+ADMIN_PASS=${ADMIN_PASS:=root}
 DEMO_PASS=${DEMO_PASS:=$ADMIN_PASS}
-CEILOMETER_PASS=${CEILOMETER_PASS:=redhat}
-GLANCE_PASS=${GLANCE_PASS:=$CEILOMETER_PASS}
 
 OS_TOKEN=$ADMIN_TOKEN
-OS_URL=http://$ENDPOINT:35357/v3
+OS_URL=http://$ADVERTISEMENT:35357/v3
 OS_IDENTITY_API_VERSION=3
 
 #keystone:
@@ -21,9 +19,9 @@ openstack service create --name keystone --description "OpenStack Identity" iden
 #
 # In a production environment, the variants might reside on separate networks that service 
 # different types of users for security reasons. 
-openstack endpoint create --region RegionOne identity public http://$ENDPOINT:5000/v3
-openstack endpoint create --region RegionOne identity internal http://$ENDPOINT:5000/v3
-openstack endpoint create --region RegionOne identity admin http://$ENDPOINT:35357/v3
+openstack endpoint create --region RegionOne identity public http://$ADVERTISEMENT:5000/v3
+openstack endpoint create --region RegionOne identity internal http://$ADVERTISEMENT:5000/v3
+openstack endpoint create --region RegionOne identity admin http://$ADVERTISEMENT:35357/v3
 # Create the default domain
 openstack domain create --description "Default Domain" default
 
