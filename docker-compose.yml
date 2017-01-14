@@ -39,7 +39,7 @@ services:
         - keystone
     environment:
         - ADMIN_TOKEN=016f77abde58da9c724b
-        - ADVERTISEMENT=10.229.43.217
+        - ADVERTISEMENT_URL=10.229.43.217
         - ADMIN_PASS=root
         - DEMO_PASS=root
 
