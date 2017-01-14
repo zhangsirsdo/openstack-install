@@ -1,13 +1,13 @@
 version: '2'
 services:
   mariadb:
-    image: 'mariadb:latest'
+    image: 'mariadb:10.1.20'
     network_mode: "host"
     environment:
         - MYSQL_ROOT_PASSWORD=redhat
 
   mariadb_init:
-    image: 'mariadb_init:latest'
+    image: 'mariadb_init:1'
     #ports:
     #    - "8880:80"
     links:
