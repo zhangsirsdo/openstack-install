@@ -1,97 +1,114 @@
 version: '2'
 services:
-  mariadb:
-    image: 'mariadb:10.1.20'
+  etcd:
+    image: 'quay.io/coreos/etcd:v2.2.5'
     network_mode: "host"
+    ports:
+        - "4001:4001"
+        - "2380:2380"
+        - "2379:2379"
     environment:
-        - MYSQL_ROOT_PASSWORD=redhat
+        - name=etcd0
+        - advertise-client-urls="http://10.229.43.217:2379,http://10.229.43.217:4001"
+        - listen-client-urls="http://0.0.0.0:2379,http://0.0.0.0:4001"
+        - initial-advertise-peer-urls="http://10.229.43.217:2380"
+        - listen-peer-urls="http://0.0.0.0:2380"
+        - initial-cluster-token="etcd-cluster-1"
+        - initial-cluster="etcd0=http://10.229.43.217:2380"
+        - initial-cluster-state=new
 
-  mariadb_init:
-    image: 'mariadb_init:1'
+#  mariadb:
+#    image: 'mariadb:10.1.20'
+#    network_mode: "host"
+#    environment:
+#        - MYSQL_ROOT_PASSWORD=redhat
+
+#  mariadb_init:
+#    image: 'mariadb_init:1'
     #ports:
     #    - "8880:80"
-    links:
-        - mariadb
-    environment:
-        - DB_HOST=10.229.43.217
-        - DB_PORT=3306
-        - DB_USER=root
-        - DB_PASS=redhat
-        - KEYSTONE_DB_PASS=redhat
-        - GLANCE_DB_PASS=redhat
-        - NOVA_DB_PASS=redhat
-        - NEUTRON_DB_PASS=redhat
-        - CINDER_DB_PASS=redhat
+#    links:
+#        - mariadb
+#    environment:
+#        - DB_HOST=10.229.43.217
+#        - DB_PORT=3306
+#        - DB_USER=root
+#        - DB_PASS=redhat
+#        - KEYSTONE_DB_PASS=redhat
+#       - GLANCE_DB_PASS=redhat
+#        - NOVA_DB_PASS=redhat
+#        - NEUTRON_DB_PASS=redhat
+#       - CINDER_DB_PASS=redhat
 
-  keystone:
-    image: 'keystone:1'
-    network_mode: "host"
-    environment:
-        - ADMIN_TOKEN=016f77abde58da9c724b
-        - KEYSTONE_DB_PASS=root
-        - DB_HOST=10.229.43.217
-        - DB_PORT=3306
-        - DB_USER=root
-        - DB_PASS=root
-  keystone_setup:
-    image: 'keystone_setup:1'
-    links:
-        - keystone
-    environment:
-        - ADMIN_TOKEN=016f77abde58da9c724b
-        - ADVERTISEMENT_URL=10.229.43.217
-        - ADMIN_PASS=root
-        - DEMO_PASS=root
+#  keystone:
+#    image: 'keystone:1'
+#    network_mode: "host"
+#    environment:
+#        - ADMIN_TOKEN=016f77abde58da9c724b
+#        - KEYSTONE_DB_PASS=root
+#        - DB_HOST=10.229.43.217
+#        - DB_PORT=3306
+#        - DB_USER=root
+#        - DB_PASS=root
+#  keystone_setup:
+#    image: 'keystone_setup:1'
+#    links:
+#        - keystone
+#    environment:
+#        - ADMIN_TOKEN=016f77abde58da9c724b
+#        - ADVERTISEMENT_URL=10.229.43.217
+#        - ADMIN_PASS=root
+#        - DEMO_PASS=root
 
-  mongodb:
-    image: 'mongodb_test:1'
-    #ports:
-    #    - "8880:80"
-    #links:
-    #    - mysql
-    network_mode: "host"
-    volumes:
-        - /home/openstack-install/mongodb/mongod.conf:/etc/mongod.conf
-
-  ceilometer_api:
-    image: 'ceilometer_api_test:1'
-    #ports:
-    #    - "8880:80"
-    #links:
-    #    - mysql
-    network_mode: "host"
-    volumes:
-        - /home/openstack-install/ceilometer-api/ceilometer.conf:/etc/ceilometer/ceilometer.conf
-
-  ceilometer_central:
-    image: 'ceilometer_central_test:1'
+#  mongodb:
+#    image: 'mongodb_test:1'
     #ports:
     #    - "8880:80"
     #links:
     #    - mysql
-    network_mode: "host"
-    volumes:
-        - /home/openstack-install/ceilometer-central/ceilometer.conf:/etc/ceilometer/ceilometer.conf
+#    network_mode: "host"
+#    volumes:
+#        - /home/openstack-install/mongodb/mongod.conf:/etc/mongod.conf
 
-  ceilometer_collector:
-    image: 'ceilometer_collector_test:1'
+#  ceilometer_api:
+#    image: 'ceilometer_api_test:1'
     #ports:
     #    - "8880:80"
     #links:
     #    - mysql
-    network_mode: "host"
-    volumes:
-        - /home/openstack-install/ceilometer-collector/ceilometer.conf:/etc/ceilometer/ceilometer.conf
+#    network_mode: "host"
+#    volumes:
+#        - /home/openstack-install/ceilometer-api/ceilometer.conf:/etc/ceilometer/ceilometer.conf
 
-  ceilometer_notification:
-    image: 'ceilometer_notification_test:1'
+#  ceilometer_central:
+#    image: 'ceilometer_central_test:1'
     #ports:
     #    - "8880:80"
     #links:
     #    - mysql
-    network_mode: "host"
-    volumes:
-        - /home/openstack-install/ceilometer-notification/ceilometer.conf:/etc/ceilometer/ceilometer.conf
+#    network_mode: "host"
+#    volumes:
+#        - /home/openstack-install/ceilometer-central/ceilometer.conf:/etc/ceilometer/ceilometer.conf
+
+#  ceilometer_collector:
+#    image: 'ceilometer_collector_test:1'
+    #ports:
+    #    - "8880:80"
+    #links:
+    #    - mysql
+#    network_mode: "host"
+#    volumes:
+#        - /home/openstack-install/ceilometer-collector/ceilometer.conf:/etc/ceilometer/ceilometer.conf
+
+#  ceilometer_notification:
+#    image: 'ceilometer_notification_test:1'
+    #ports:
+    #    - "8880:80"
+    #links:
+    #    - mysql
+#    network_mode: "host"
+#    volumes:
+#        - /home/openstack-install/ceilometer-notification/ceilometer.conf:/etc/ceilometer/ceilometer.conf
 
 
 
