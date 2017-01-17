@@ -3,7 +3,7 @@
 
 export ETCD_HOST=${ETCD_HOST:=127.0.0.1}
 export ETCD_PORT=${ETCD_PORT:=2379}
-export DB_HOST=${DB_HOST:=127.0.0.1}
+export DB_HOST=${DB_HOST:=$ETCD_HOST}
 export DB_PORT=${DB_PORT:=3306}
 export DB_USER=${DB_USER:=root}
 export DB_PASS=${DB_PASS:=root}
@@ -29,16 +29,15 @@ EOF
 docker-compose -f ./openstack_mariadb_compose.yml up -d 
 
 # save params of mariadb to etcd
-export DB_HOST=`ifconfig eth0|grep "inet "|awk '{print $2}'|awk -F: '{print $2}'`
 sh ./role_mariadb_register.sh
 
 # detect whether the params of mariadb exist or not
-mariadb_status=`curl -L -XGET http://$ETCD_HOST:$ETCD_PORT/v2/keys/mariadb_active/db_host`
+mariadb_status=`curl -L -XGET http://$ETCD_HOST:$ETCD_PORT/v2/keys/endpoints/mariadb/host`
 res=$(echo $mariadb_status | grep "errorCode")
 while [ $res != "" ]
 do
   sleep 1
-  mariadb_status=`curl -L -XGET http://$ETCD_HOST:$ETCD_PORT/v2/keys/mariadb_active/db_host`
+  mariadb_status=`curl -L -XGET http://$ETCD_HOST:$ETCD_PORT/v2/keys/endpoints/mariadb/host`
   res=$(echo $mariadb_status | grep "errorCode")
 done
 
