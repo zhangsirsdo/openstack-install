@@ -1,0 +1,9 @@
+version: '2'
+services:
+  git-server:
+    image: 'cirocosta/gitserver-http:latest'
+    network_mode: "bridge"
+    ports:
+        - 'GIT_HTTP_PORT:80'
+    volumes:
+        - 'GIT_REPOS_PATH:/var/lib/git'

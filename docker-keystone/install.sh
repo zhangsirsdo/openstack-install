@@ -1,11 +1,17 @@
 #!/bin/bash
 
-ADMIN_TOKEN=${ADMIN_TOKEN:=016f77abde58da9c724b}
-KEYSTONE_DB_PASS=${KEYSTONE_DB_PASS:=root}
-DB_HOST=${DB_HOST:=localhost}
-DB_PORT=${DB_PORT:=3306}
-DB_USER=${DB_USER:=root}
-DB_PASS=${DB_PASS:=root}
+ADMIN_TOKEN=${ADMIN_TOKEN:=`curl -L -XGET \
+  http://$ETCD_ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/keystone/admin_token|jq -r '.node.value'`}
+KEYSTONE_DB_PASS=${KEYSTONE_DB_PASS:=`curl -L -XGET \
+  http://$ETCD_ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/mariadb/keystone_db_pass|jq -r '.node.value'`}
+DB_HOST=${DB_HOST:=`curl -L -XGET \
+  http://$ETCD_ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/mariadb/host|jq -r '.node.value'`}
+DB_PORT=${DB_PORT:=`curl -L -XGET \
+  http://$ETCD_ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/mariadb/port|jq -r '.node.value'`}
+DB_USER=${DB_USER:=`curl -L -XGET \
+  http://$ETCD_ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/mariadb/user|jq -r '.node.value'`}
+DB_PASS=${DB_PASS:=`curl -L -XGET \
+  http://$ETCD_ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/mariadb/pass|jq -r '.node.value'`}
 
 openstack-config --set /etc/keystone/keystone.conf DEFAULT admin_token $ADMIN_TOKEN
 openstack-config --set /etc/keystone/keystone.conf DEFAULT debug true

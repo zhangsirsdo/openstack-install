@@ -1,13 +1,16 @@
 #!/bin/bash
 
-ADMIN_TOKEN=${ADMIN_TOKEN:=016f77abde58da9c724b}
-ADVERTISEMENT_URL=${ADVERTISEMENT_URL:=127.0.0.1}
-ADMIN_PASS=${ADMIN_PASS:=root}
-DEMO_PASS=${DEMO_PASS:=$ADMIN_PASS}
+ADMIN_TOKEN=${ADMIN_TOKEN:=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/keystone/admin_token|jq -r '.node.value'`}
+ADMIN_PASS=${ADMIN_PASS:=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/keystone/admin_pass|jq -r '.node.value'`}
+DEMO_PASS=${DEMO_PASS:=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/keystone/demo_pass|jq -r '.node.value'`}
+OS_IDENTITY_API_VERSION=${OS_IDENTITY_API_VERSION:=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/keystone/os_identity_api_version|jq -r '.node.value'`}
 
 OS_TOKEN=$ADMIN_TOKEN
 OS_URL=http://$ADVERTISEMENT_URL:35357/v3
-OS_IDENTITY_API_VERSION=3
 
 #keystone:
 # Create the service entity for the Identity service

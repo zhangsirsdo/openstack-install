@@ -1,0 +1,7 @@
+version: '2'
+services:
+  registry:
+    image: 'registry:1'
+    network_mode: "bridge"
+    ports:
+        - "REGISTRY_PORT:5000"
