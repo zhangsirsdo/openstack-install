@@ -1,7 +1,9 @@
 version: '2'
 services:
   registry:
-    image: 'registry:1'
+    image: 'registry:2'
     network_mode: "bridge"
     ports:
         - "REGISTRY_PORT:5000"
+    volumes:
+        - 'REGISTRY_PATH:/var/lib/registry'

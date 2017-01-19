@@ -1,0 +1,9 @@
+version: '2'
+services:
+  yum-repo:
+    image: 'dgutierrez1287/yum-repo:latest'
+    network_mode: "bridge"
+    ports:
+        - 'YUM_HTTP_PORT:80'
+    volumes:
+        - 'YUM_REPO_PATH:/repo'
