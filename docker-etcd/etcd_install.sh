@@ -1,27 +1,21 @@
 #!/bin/bash
 
+ADVERTISEMENT_URL=`cat ../global.conf |grep ADVERTISEMENT_URL|awk -F '=' '{print $2}'|awk -F ':' '{print $1}'`
 ADVERTISEMENT_URL=${ADVERTISEMENT_URL:=127.0.0.1}
 NAME=${NAME:=etcd1}
 TOKEN=${TOKEN:=etcd-cluster-1}
 STATE=${STATE:=new}
-cat <<EOF >./openstack_etcd_compose.yml
-version: '2'
-services:
-  etcd:
-    image: 'quay.io/coreos/etcd:v2.2.5'
-    network_mode: "bridge"
-    ports:
-        - "2380:2380"
-        - "2379:2379"
-    environment:
-        - ETCD_NAME=$NAME
-        - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://$ADVERTISEMENT_URL:2380
-        - ETCD_LISTEN_PEER_URLS=http://$ADVERTISEMENT_URL:2380
-        - ETCD_ADVERTISE_CLIENT_URLS=http://$ADVERTISEMENT_URL:2379
-        - ETCD_LISTEN_CLIENT_URLS=http://$ADVERTISEMENT_URL:2379
-        - ETCD_INITIAL_CLUSTER=$NAME=http://$ADVERTISEMENT_URL:2380
-        - ETCD_INITIAL_CLUSTER_STATE=$STATE
-        - ETCD_INITIAL_CLUSTER_TOKEN=$TOKEN
-EOF
+PEER_PORT=${PEER_PORT:=2380}
+CLIENT_PORT=${CLIENT_PORT:=2379}
+
+# start container of etcd
+cp openstack_etcd_compose_template.yml openstack_etcd_compose.yml
+sed -i "s#PEER_PORT#$PEER_PORT#g" openstack_etcd_compose.yml
+sed -i "s#CLIENT_PORT#$CLIENT_PORT#g" openstack_etcd_compose.yml
+sed -i "s#NAME_VAR#$NAME#g" openstack_etcd_compose.yml
+sed -i "s#ADVERTISEMENT_HOST#$ADVERTISEMENT_URL#g" openstack_etcd_compose.yml
+sed -i "s#STATE_VAR#$STATE#g" openstack_etcd_compose.yml
+sed -i "s#TOKEN_VAR#$TOKEN#g" openstack_etcd_compose.yml
 
 docker-compose -f ./openstack_etcd_compose.yml up -d
+rm -f openstack_etcd_compose.yml
