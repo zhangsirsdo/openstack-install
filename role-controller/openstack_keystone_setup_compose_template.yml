@@ -1,0 +1,9 @@
+version: '2'
+services:
+   keystone_setup:
+     image: 'keystone_setup:1'
+     network_mode: "bridge"
+     environment:
+         - ADMIN_TOKEN=ADMIN_TOKEN_VAR
+         - ADMIN_PASS=ADMIN_PASS_VAR
+         - DEMO_PASS=DEMO_PASS_VAR

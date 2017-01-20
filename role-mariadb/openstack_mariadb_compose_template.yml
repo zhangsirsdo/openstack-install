@@ -4,6 +4,6 @@ services:
     image: 'mariadb:10.1.20'
     network_mode: "bridge"
     ports:
-        - "MARIADB_PORT:3306"
+        - "DB_PORT:3306"
     environment:
         - MYSQL_ROOT_PASSWORD=DB_PASS
