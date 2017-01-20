@@ -24,17 +24,21 @@ DB_PASS=`curl -L -XGET \
 KEYSTONE_ADMIN_PORT=${KEYSTONE_ADMIN_PORT:=35357}
 KEYSTONE_INTERNAL_PORT=${KEYSTONE_INTERNAL_PORT:=5000}
 ADMIN_TOKEN=${ADMIN_TOKEN:=016f77abde58da9c724b}
-cp openstack_keystone_compose_template.yml openstack_keystone_compose.yml
-sed -i "s#KEYSTONE_ADMIN_PORT#$KEYSTONE_ADMIN_PORT#g" openstack_keystone_compose.yml
-sed -i "s#KEYSTONE_INTERNAL_PORT#$KEYSTONE_INTERNAL_PORT#g" openstack_keystone_compose.yml
-sed -i "s#ADMIN_TOKEN_VAR#$ADMIN_TOKEN#g" openstack_keystone_compose.yml
-sed -i "s#KEYSTONE_DB_PASS_VAR#$KEYSTONE_DB_PASS#g" openstack_keystone_compose.yml
-sed -i "s#DB_HOST_VAR#$DB_HOST#g" openstack_keystone_compose.yml
-sed -i "s#DB_PORT_VAR#$DB_PORT#g" openstack_keystone_compose.yml
-sed -i "s#DB_USER_VAR#$DB_USER#g" openstack_keystone_compose.yml
-sed -i "s#DB_PASS_VAR#$DB_PASS#g" openstack_keystone_compose.yml
-docker-compose -f ./openstack_keystone_compose.yml up -d
-rm -f openstack_keystone_compose.yml
+
+compose_path="/etc/docker_compose/"
+if [ ! -x "$compose_path" ]; then
+  mkdir -p $compose_path
+fi
+cp openstack_keystone_compose_template.yml $compose_path"openstack_keystone_compose.yml"
+sed -i "s#KEYSTONE_ADMIN_PORT#$KEYSTONE_ADMIN_PORT#g" $compose_path"openstack_keystone_compose.yml"
+sed -i "s#KEYSTONE_INTERNAL_PORT#$KEYSTONE_INTERNAL_PORT#g" $compose_path"openstack_keystone_compose.yml"
+sed -i "s#ADMIN_TOKEN_VAR#$ADMIN_TOKEN#g" $compose_path"openstack_keystone_compose.yml"
+sed -i "s#KEYSTONE_DB_PASS_VAR#$KEYSTONE_DB_PASS#g" $compose_path"openstack_keystone_compose.yml"
+sed -i "s#MARIADB_HOST_VAR#$DB_HOST#g" $compose_path"openstack_keystone_compose.yml"
+sed -i "s#MARIADB_PORT_VAR#$DB_PORT#g" $compose_path"openstack_keystone_compose.yml"
+sed -i "s#MARIADB_USER_VAR#$DB_USER#g" $compose_path"openstack_keystone_compose.yml"
+sed -i "s#MARIADB_PASS_VAR#$DB_PASS#g" $compose_path"openstack_keystone_compose.yml"
+docker-compose -f $compose_path"openstack_keystone_compose.yml" up -d
 # save configuration of keystone to etcd
 curl -L -XPUT http://$ADVERTISEMENT_URL/v2/keys/endpoints/keystone/host -d value="$KEYSTONE_HOST"
 
@@ -46,39 +50,16 @@ DEMO_PASS=`curl -L -XGET \
   http://$ADVERTISEMENT_URL/v2/keys/endpoints/keystone/demo_pass|jq -r '.node.value'`
 ADMIN_PASS=${ADMIN_PASS:=root}
 DEMO_PASS=${DEMO_PASS:=root}
-penstack_keystone_setup_compose_template.yml openstack_keystone_setup_compose.yml
-sed -i "s#ADMIN_TOKEN_VAR#$ADMIN_TOKEN#g" openstack_keystone_setup_compose.yml
-sed -i "s#ADMIN_PASS_VAR#$ADMIN_PASS#g" openstack_keystone_setup_compose.yml
-sed -i "s#DEMO_PASS_VAR#$DEMO_PASS#g" openstack_keystone_setup_compose.yml
-docker-compose -f ./openstack_keystone_setup_compose.yml up -d
-rm -f openstack_keystone_setup_compose.yml
+OS_IDENTITY_API_VERSION=${OS_IDENTITY_API_VERSION:=3}
+cp openstack_keystone_setup_compose_template.yml $compose_path"openstack_keystone_setup_compose.yml"
+sed -i "s#ADMIN_TOKEN_VAR#$ADMIN_TOKEN#g" $compose_path"openstack_keystone_setup_compose.yml"
+sed -i "s#ADMIN_PASS_VAR#$ADMIN_PASS#g" $compose_path"openstack_keystone_setup_compose.yml"
+sed -i "s#DEMO_PASS_VAR#$DEMO_PASS#g" $compose_path"openstack_keystone_setup_compose.yml"
+sed -i "s#OS_IDENTITY_API_VERSION_VAR#$OS_IDENTITY_API_VERSION#g" $compose_path"openstack_keystone_setup_compose.yml"
+sed -i "s#ADVERTISEMENT_URL_VAR#$ADVERTISEMENT_URL#g" $compose_path"openstack_keystone_setup_compose.yml"
+docker-compose -f $compose_path"openstack_keystone_setup_compose.yml" up -d
 # save configuration of keystone_setup to etcd
 curl -L -XPUT http://$ADVERTISEMENT_URL/v2/keys/endpoints/keystone_setup/admin_pass -d value="$ADMIN_PASS"
 curl -L -XPUT http://$ADVERTISEMENT_URL/v2/keys/endpoints/keystone_setup/demo_pass -d value="$DEMO_PASS"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
