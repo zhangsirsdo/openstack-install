@@ -1,12 +1,8 @@
-FROM centos:7
+FROM centos:base
 
-ADD ./CentOS7-Base.repo /etc/yum.repos.d/CentOS-Base.repo
-ADD ./setup.sh /home/setup.sh
+RUN yum install -y openstack-glance openstack-utils python-openstackclient
 
-RUN yum clean all
-RUN yum makecache
+ADD install.sh /home/install.sh
+RUN chmod 755 /home/install.sh
 
-RUN yum install -y openstack-glance
-
-CMD /usr/bin/python2.7 /usr/bin/glance-api --config-file /etc/glance/glance-api.conf
-
+CMD ["/sbin/dumb-init","/home/install.sh"]

@@ -95,4 +95,36 @@ docker-compose -f $compose_path"openstack_keystone_setup_compose.yml" up -d
 curl -L -XPUT http://$ADVERTISEMENT_URL/v2/keys/endpoints/keystone_setup/admin_pass -d value="$ADMIN_PASS"
 curl -L -XPUT http://$ADVERTISEMENT_URL/v2/keys/endpoints/keystone_setup/demo_pass -d value="$DEMO_PASS"
 
+# install glance_api container
+GLANCE_HOST=${GLANCE_HOST:=`echo $ADVERTISEMENT_URL|awk -F ':' '{print $1}'`}
+GLANCE_PASS=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL/v2/keys/endpoints/glance/pass|jq -r '.node.value'`
+GLANCE_DB_PASS=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL/v2/keys/endpoints/glance/pass|jq -r '.node.value'`
+GLANCE_PASS=${GLANCE_PASS:-root}
+GLANCE_DB_PASS=${GLANCE_DB_PASS:-root}
+GLANCE_PORT=${GLANCE_PORT:-9292}
+
+cp openstack_glance_api_compose_template.yml $compose_path"openstack_glance_api_compose_template.yml"
+sed -i "s#GLANCE_PASS_VAR#$GLANCE_PASS#g" $compose_path"openstack_glance_api_compose_template.yml"
+sed -i "s#GLANCE_DB_PASS_VAR#$GLANCE_DB_PASS#g" $compose_path"openstack_glance_api_compose_template.yml"
+sed -i "s#KEYSTONE_INTERNAL_PORT_VAR#$KEYSTONE_INTERNAL_PORT#g" $compose_path"openstack_glance_api_compose_template.yml"
+sed -i "s#KEYSTONE_ADMIN_PORT_VAR#$KEYSTONE_ADMIN_PORT#g" $compose_path"openstack_glance_api_compose_template.yml"
+sed -i "s#ADMIN_PASS_VAR#$ADMIN_PASS#g" $compose_path"openstack_glance_api_compose_template.yml"
+sed -i "s#ADVERTISEMENT_URL_VAR#$ADVERTISEMENT_URL#g" $compose_path"openstack_glance_api_compose_template.yml"
+sed -i "s#GLANCE_PORT_VAR#$GLANCE_PORT#g" $compose_path"openstack_glance_api_compose_template.yml"
+docker-compose -f $compose_path"openstack_glance_api_compose_template.yml" up -d
+# save configuration of keystone_setup to etcd
+curl -L -XPUT http://$ADVERTISEMENT_URL/v2/keys/endpoints/glance/host -d value="$GLANCE_HOST"
+curl -L -XPUT http://$ADVERTISEMENT_URL/v2/keys/endpoints/glance/port -d value="$GLANCE_PORT"
+
+
+
+
+
+
+
+
+
+
 
