@@ -1,16 +1,12 @@
 #!/bin/bash
 
-ADMIN_TOKEN=${ADMIN_TOKEN:=`curl -L -XGET \
-  http://$ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/keystone/admin_token|jq -r '.node.value'`}
-ADMIN_PASS=${ADMIN_PASS:=`curl -L -XGET \
-  http://$ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/keystone/admin_pass|jq -r '.node.value'`}
-DEMO_PASS=${DEMO_PASS:=`curl -L -XGET \
-  http://$ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/keystone/demo_pass|jq -r '.node.value'`}
-OS_IDENTITY_API_VERSION=${OS_IDENTITY_API_VERSION:=`curl -L -XGET \
-  http://$ADVERTISEMENT_URL:$ETCD_PORT/v2/keys/endpoints/keystone/os_identity_api_version|jq -r '.node.value'`}
-
-OS_TOKEN=$ADMIN_TOKEN
-OS_URL=http://$ADVERTISEMENT_URL:35357/v3
+ADMIN_TOKEN=${ADMIN_TOKEN:=016f77abde58da9c724b}
+ADMIN_PASS=${ADMIN_PASS:=root}
+DEMO_PASS=${DEMO_PASS:=root}
+export OS_IDENTITY_API_VERSION=${OS_IDENTITY_API_VERSION:=3}
+export OS_TOKEN=$ADMIN_TOKEN
+ADVERTISEMENT_HOST=`echo $ADVERTISEMENT_URL|awk -F ':' '{print $1}'`
+export OS_URL=http://$ADVERTISEMENT_HOST:35357/v3
 
 #keystone:
 # Create the service entity for the Identity service
@@ -22,9 +18,9 @@ openstack service create --name keystone --description "OpenStack Identity" iden
 #
 # In a production environment, the variants might reside on separate networks that service 
 # different types of users for security reasons. 
-openstack endpoint create --region RegionOne identity public http://$ADVERTISEMENT_URL:5000/v3
-openstack endpoint create --region RegionOne identity internal http://$ADVERTISEMENT_URL:5000/v3
-openstack endpoint create --region RegionOne identity admin http://$ADVERTISEMENT_URL:35357/v3
+openstack endpoint create --region RegionOne identity public http://$ADVERTISEMENT_HOST:5000/v3
+openstack endpoint create --region RegionOne identity internal http://$ADVERTISEMENT_HOST:5000/v3
+openstack endpoint create --region RegionOne identity admin http://$ADVERTISEMENT_HOST:35357/v3
 # Create the default domain
 openstack domain create --description "Default Domain" default
 
@@ -46,5 +42,4 @@ openstack user create --domain default --password $DEMO_PASS demo
 openstack role create user
 # Add the user role to the demo project and user
 openstack role add --project demo --user demo user
-
 
