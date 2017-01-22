@@ -2,6 +2,28 @@
 
 ADVERTISEMENT_URL=`cat ../global.conf |grep ADVERTISEMENT_URL|awk -F '=' '{print $2}'`
 ADVERTISEMENT_URL=${ADVERTISEMENT_URL:=127.0.0.1:2379}
+ADVERTISEMENT_HOST=`echo $ADVERTISEMENT_URL|awk -F ':' '{print $1}'`
+ADVERTISEMENT_HOST=${ADVERTISEMENT_HOST:=127.0.0.1}
+NAME=${NAME:=etcd1}
+TOKEN=${TOKEN:=etcd-cluster-1}
+STATE=${STATE:=new}
+PEER_PORT=${PEER_PORT:=2380}
+CLIENT_PORT=${CLIENT_PORT:=2379}
+
+compose_path="/etc/docker_compose/"
+if [ ! -x "$compose_path" ]; then
+  mkdir -p $compose_path
+fi
+# start container of etcd
+cp openstack_etcd_compose_template.yml $compose_path"openstack_etcd_compose.yml"
+sed -i "s#PEER_PORT#$PEER_PORT#g" $compose_path"openstack_etcd_compose.yml"
+sed -i "s#CLIENT_PORT#$CLIENT_PORT#g" $compose_path"openstack_etcd_compose.yml"
+sed -i "s#NAME_VAR#$NAME#g" $compose_path"openstack_etcd_compose.yml"
+sed -i "s#ADVERTISEMENT_HOST#$ADVERTISEMENT_HOST#g" $compose_path"openstack_etcd_compose.yml"
+sed -i "s#STATE_VAR#$STATE#g" $compose_path"openstack_etcd_compose.yml"
+sed -i "s#TOKEN_VAR#$TOKEN#g" $compose_path"openstack_etcd_compose.yml"
+docker-compose -f $compose_path"openstack_etcd_compose.yml" up -d
+# to do : add all init params into etcd
 
 REPO_NAME=`curl -L -XGET \
   http://$ADVERTISEMENT_URL/v2/keys/endpoints/git/repo_name|jq -r '.node.value'`
@@ -40,10 +62,6 @@ REGISTRY_HOST=${REGISTRY_HOST:=`echo $ADVERTISEMENT_URL|awk -F ':' '{print $1}'`
 YUM_HOST=${REGISTRY_HOST:=`echo $ADVERTISEMENT_URL|awk -F ':' '{print $1}'`}
 
 pwd=`pwd`
-compose_path="/etc/docker_compose/"
-if [ ! -x "$compose_path" ]; then
-  mkdir -p $compose_path
-fi
 # start container of git server
 cp openstack_git_compose_template.yml $compose_path"openstack_git_compose.yml"
 sed -i "s#GIT_HTTP_PORT#$GIT_HTTP_PORT#g" $compose_path"openstack_git_compose.yml"
