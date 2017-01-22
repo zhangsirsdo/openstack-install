@@ -3,6 +3,43 @@
 ADVERTISEMENT_URL=`cat ../global.conf |grep ADVERTISEMENT_URL|awk -F '=' '{print $2}'`
 ADVERTISEMENT_URL=${ADVERTISEMENT_URL:=127.0.0.1:2379}
 
+compose_path="/etc/docker_compose/"
+if [ ! -x "$compose_path" ]; then
+  mkdir -p $compose_path
+fi
+
+#install rabbitmq container
+RABBITMQ_PORT1=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL/v2/keys/endpoints/rabbitmq/rabbitmq_port1|jq -r '.node.value'`
+RABBITMQ_PORT2=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL/v2/keys/endpoints/rabbitmq/rabbitmq_port2|jq -r '.node.value'`
+RABBITMQ_PORT3=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL/v2/keys/endpoints/rabbitmq/rabbitmq_port3|jq -r '.node.value'`
+RABBITMQ_PORT4=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL/v2/keys/endpoints/rabbitmq/rabbitmq_port4|jq -r '.node.value'`
+RABBITMQ_USER=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL/v2/keys/endpoints/rabbitmq/rabbitmq_user|jq -r '.node.value'`
+RABBITMQ_PASS=`curl -L -XGET \
+  http://$ADVERTISEMENT_URL/v2/keys/endpoints/rabbitmq/rabbitmq_pass|jq -r '.node.value'`
+cp openstack_rabbitmq_compose_template.yml $compose_path"openstack_rabbitmq_compose.yml"
+sed -i "s#RABBITMQ_PORT1#$RABBITMQ_PORT1#g" $compose_path"openstack_rabbitmq_compose.yml"
+sed -i "s#RABBITMQ_PORT2#$RABBITMQ_PORT2#g" $compose_path"openstack_rabbitmq_compose.yml"
+sed -i "s#RABBITMQ_PORT3#$RABBITMQ_PORT3#g" $compose_path"openstack_rabbitmq_compose.yml"
+sed -i "s#RABBITMQ_PORT4#$RABBITMQ_PORT4#g" $compose_path"openstack_rabbitmq_compose.yml"
+sed -i "s#RABBITMQ_USER#$RABBITMQ_USER#g" $compose_path"openstack_rabbitmq_compose.yml"
+sed -i "s#RABBITMQ_PASS#$RABBITMQ_PASS#g" $compose_path"openstack_rabbitmq_compose.yml"
+docker-compose -f $compose_path"openstack_rabbitmq_compose.yml" up -d
+rabbitmq_container_id=`docker ps -a|grep rabbitmq|awk '{print $1}'`
+while [ $rabbitmq_container_id == "" ]
+do
+  sleep 1
+  rabbitmq_container_id=`docker ps -a|grep rabbitmq|awk '{print $1}'`
+done
+docker exec -it $rabbitmq_container_id rabbitmqctl set_permissions $RABBITMQ_USER ".*" ".*" ".*"
+# save configuration of rabbit to etcd
+curl -L -XPUT http://$ADVERTISEMENT_URL/v2/keys/endpoints/rabbitmq/host -d value="$KEYSTONE_HOST"
+
+
 # install keystone container
 KEYSTONE_HOST=${KEYSTONE_HOST:=`echo $ADVERTISEMENT_URL|awk -F ':' '{print $1}'`}
 KEYSTONE_ADMIN_PORT=`curl -L -XGET \
@@ -25,10 +62,6 @@ KEYSTONE_ADMIN_PORT=${KEYSTONE_ADMIN_PORT:=35357}
 KEYSTONE_INTERNAL_PORT=${KEYSTONE_INTERNAL_PORT:=5000}
 ADMIN_TOKEN=${ADMIN_TOKEN:=016f77abde58da9c724b}
 
-compose_path="/etc/docker_compose/"
-if [ ! -x "$compose_path" ]; then
-  mkdir -p $compose_path
-fi
 cp openstack_keystone_compose_template.yml $compose_path"openstack_keystone_compose.yml"
 sed -i "s#KEYSTONE_ADMIN_PORT#$KEYSTONE_ADMIN_PORT#g" $compose_path"openstack_keystone_compose.yml"
 sed -i "s#KEYSTONE_INTERNAL_PORT#$KEYSTONE_INTERNAL_PORT#g" $compose_path"openstack_keystone_compose.yml"

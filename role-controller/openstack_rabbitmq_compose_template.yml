@@ -1,0 +1,13 @@
+version: '2'
+services:
+   rabbitmq:
+     image: 'rabbitmq:3'
+     network_mode: "bridge"
+     ports:
+         - "RABBITMQ_PORT1:4369"
+         - "RABBITMQ_PORT2:5671"
+         - "RABBITMQ_PORT3:5672"
+         - "RABBITMQ_PORT4:25672"
+     environment:
+         - RABBITMQ_DEFAULT_USER=RABBITMQ_USER
+         - RABBITMQ_DEFAULT_PASS=RABBITMQ_PASS
