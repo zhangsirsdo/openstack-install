@@ -55,10 +55,10 @@ done
 
 # generate compose file of mariadb_setup
 cp openstack_mariadb_setup_compose_template.yml $compose_path"openstack_mariadb_setup_compose.yml"
-sed -i "s#DB_HOST_VAR#$DB_HOST#g" $compose_path"openstack_mariadb_setup_compose.yml"
-sed -i "s#DB_PORT_VAR#$DB_PORT#g" $compose_path"openstack_mariadb_setup_compose.yml"
-sed -i "s#DB_USER_VAR#$DB_USER#g" $compose_path"openstack_mariadb_setup_compose.yml"
-sed -i "s#DB_PASS_VAR#$DB_PASS_VAR#g" $compose_path"openstack_mariadb_setup_compose.yml"
+sed -i "s#MARIADB_HOST_VAR#$DB_HOST#g" $compose_path"openstack_mariadb_setup_compose.yml"
+sed -i "s#MARIADB_PORT_VAR#$DB_PORT#g" $compose_path"openstack_mariadb_setup_compose.yml"
+sed -i "s#MARIADB_USER_VAR#$DB_USER#g" $compose_path"openstack_mariadb_setup_compose.yml"
+sed -i "s#MARIADB_PASS_VAR#$DB_PASS#g" $compose_path"openstack_mariadb_setup_compose.yml"
 sed -i "s#KEYSTONE_DB_PASS_VAR#$KEYSTONE_DB_PASS#g" $compose_path"openstack_mariadb_setup_compose.yml"
 sed -i "s#GLANCE_DB_PASS_VAR#$GLANCE_DB_PASS#g" $compose_path"openstack_mariadb_setup_compose.yml"
 sed -i "s#NOVA_DB_PASS_VAR#$NOVA_DB_PASS#g" $compose_path"openstack_mariadb_setup_compose.yml"
