@@ -1,14 +1,13 @@
 version: '2'
 services:
-   glance_api:
-     image: 'glance_api:1'
+   glance_registry:
+     image: 'glance_registry:1'
      network_mode: "bridge"
      ports:
-         - "GLANCE_API_PORT_VAR:9292"
+         - "GLANCE_REGISTRY_PORT_VAR:9191"
      environment:
          - ADVERTISEMENT_URL=ADVERTISEMENT_URL_VAR
          - GLANCE_PASS=GLANCE_PASS_VAR
          - GLANCE_DB_PASS=GLANCE_DB_PASS_VAR
          - KEYSTONE_INTERNAL_PORT=KEYSTONE_INTERNAL_PORT_VAR
          - KEYSTONE_ADMIN_PORT=KEYSTONE_ADMIN_PORT_VAR
-         - ADMIN_PASS=ADMIN_PASS_VAR
