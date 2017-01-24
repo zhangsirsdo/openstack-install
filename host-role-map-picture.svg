@@ -1,0 +1,77 @@
+<svg width="1280" height="960" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="#fff" id="canvas_background" height="962" width="1282" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_48" height="144" width="148" y="289" x="137.5" stroke-width="1.5" stroke="#000" fill="#84D3DB"/>
+  <rect id="svg_47" height="144" width="148" y="283" x="132.5" stroke-width="1.5" stroke="#000" fill="#84D3DB"/>
+  <rect stroke="#000" id="svg_44" height="187.000008" width="148" y="594" x="373.5" stroke-width="1.5" fill="#FFFA8D"/>
+  <rect stroke="#000" id="svg_43" height="190.999992" width="148" y="292" x="375.5" stroke-width="1.5" fill="#FFAFCC"/>
+  <rect stroke="#000" id="svg_7" height="190.999992" width="148" y="283" x="368.5" stroke-width="1.5" fill="#FFAFCC"/>
+  <rect id="svg_1" height="144" width="148" y="275" x="126.5" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_2" y="293" x="140.5" stroke-width="0" stroke="#000" fill="#000000">operation node</text>
+  <rect stroke="#000" id="svg_3" height="189.999996" width="148" y="276" x="360.5" stroke-width="1.5" fill="#FFAFCC"/>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_4" y="294" x="375.5" stroke-width="0" stroke="#000" fill="#000000">controller node</text>
+  <rect id="svg_5" height="144" width="148" y="275" x="126.5" stroke-width="1.5" stroke="#000" fill="#84D3DB"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_6" y="293" x="140.5" stroke-width="0" stroke="#000" fill="#000000">operation node</text>
+  <rect stroke="#000" id="svg_9" height="187.000008" width="148" y="586" x="366.5" stroke-width="1.5" fill="#FFFA8D"/>
+  <rect stroke="#000" id="svg_10" height="187.000008" width="148" y="579" x="358.5" stroke-width="1.5" fill="#FFFA8D"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_11" y="597" x="373.5" stroke-width="0" stroke="#000" fill="#000000">compute node</text>
+  <rect id="svg_12" height="144" width="148" y="293" x="633.5" stroke-width="1.5" stroke="#000" fill="#D3BEE7"/>
+  <rect id="svg_13" height="144" width="148" y="286" x="625.5" stroke-width="1.5" stroke="#000" fill="#D3BEE7"/>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_14" y="304" x="640.5" stroke-width="0" stroke="#000" fill="#000000">mariadb node</text>
+  <rect id="svg_15" height="144" width="148" y="582" x="128.5" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_16" y="600" x="143.5" stroke-width="0" stroke="#000" fill="#000000">operation node</text>
+  <rect id="svg_17" height="144" width="148" y="582" x="128.5" stroke-width="1.5" stroke="#000" fill="#A8FFE9"/>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_18" y="600" x="143.5" stroke-width="0" stroke="#000" fill="#000000">initialtor node</text>
+  <rect stroke="null" id="svg_21" height="25.999999" width="123" y="309" x="138" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_22" y="327" x="171" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-log</text>
+  <rect stroke="null" id="svg_23" height="25.999999" width="123" y="321" x="638" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_24" y="339" x="649" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-mariadb</text>
+  <rect stroke="null" id="svg_25" height="25.999999" width="123" y="621" x="141" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_26" y="639" x="154" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-initiator</text>
+  <rect stroke="null" id="svg_27" height="25.999999" width="123" y="307" x="372" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_28" y="325" x="379" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-controller</text>
+  <rect stroke="null" id="svg_29" height="25.999999" width="123" y="339" x="372" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_30" y="357" x="379" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-telemetry</text>
+  <rect stroke="null" id="svg_31" height="25.999999" width="123" y="372" x="372" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_32" y="390" x="381" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-network</text>
+  <rect stroke="null" id="svg_33" height="25.999999" width="123" y="407" x="372" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_34" y="425" x="381" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-storage</text>
+  <rect stroke="null" id="svg_35" height="25.999999" width="123" y="611" x="373" stroke-width="1.5" fill="#ffffff"/>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_36" y="629" x="380" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-compute</text>
+  <rect stroke="null" id="svg_37" height="25.999999" width="123" y="676" x="373" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_38" y="694" x="382" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-network</text>
+  <rect stroke="null" id="svg_39" height="25.999999" width="123" y="708" x="373" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_40" y="726" x="382" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-storage</text>
+  <rect stroke="null" id="svg_41" height="25.999999" width="123" y="645" x="374" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_42" y="663" x="381" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-telemetry</text>
+  <rect stroke="null" id="svg_45" height="25.999999" width="123" y="343" x="138" stroke-width="1.5" fill="#ffffff"/>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_46" y="361" x="150" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-monitor</text>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_49" y2="365" x2="625.016948" y1="365" x1="507" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_50" y2="579.017698" x2="439" y1="466" x1="439" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+  <line stroke-dasharray="5,5" stroke-linecap="null" stroke-linejoin="null" id="svg_51" y2="582.111073" x2="202" y1="420" x1="202" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+  <line stroke="#000" stroke-dasharray="5,5" stroke-linecap="null" stroke-linejoin="null" id="svg_52" y2="656" x2="359.097503" y1="656" x1="277" stroke-opacity="null" fill="none"/>
+  <line stroke-dasharray="5,5" stroke-linecap="null" stroke-linejoin="null" id="svg_53" y2="464" x2="360" y1="585" x1="276" stroke-width="1.5" stroke="#000" fill="none"/>
+  <line stroke-dasharray="5,2,2,2,2,2" stroke-linecap="null" stroke-linejoin="null" id="svg_54" y2="347" x2="361.022469" y1="347" x1="272" stroke-width="1.5" stroke="#000" fill="none"/>
+  <line stroke="#000" stroke-dasharray="5,2,2,2,2,2" stroke-linecap="null" stroke-linejoin="null" id="svg_55" y2="148.955574" x2="202" y1="275" x1="202" stroke-width="1.5" fill="none"/>
+  <line stroke-dasharray="5,2,2,2,2,2" stroke-linecap="null" stroke-linejoin="null" id="svg_56" y2="230" x2="698.049393" y1="230" x1="202" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+  <line stroke-dasharray="5,2,2,2,2,2" stroke-linecap="null" stroke-linejoin="null" id="svg_57" y2="285.222771" x2="697" y1="229" x1="697" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+  <line stroke-dasharray="5,2,2,2,2,2" stroke-linecap="null" stroke-linejoin="null" id="svg_58" y2="577" x2="359" y1="418" x1="273" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+  <line stroke-dasharray="5,5" stroke-linecap="null" stroke-linejoin="null" id="svg_59" y2="429" x2="711" y1="582" x1="277" stroke-width="1.5" stroke="#000" fill="none"/>
+  <path d="m216,819c4,0 14.016434,0.869324 37,0c66.141815,-2.50177 109,-10 130,-16c0,0 0,0 4,-3l11,-9l10,-7l1,-1" id="svg_62" fill="none"/>
+  <rect stroke="#000" id="svg_63" height="76.000002" width="148" y="114" x="363.5" stroke-width="1.5" fill="#D3BEE7"/>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_64" y="132" x="368.5" stroke-width="0" stroke="#000" fill="#000000">api-gateway node</text>
+  <rect stroke="null" id="svg_65" height="25.999999" width="133.000005" y="149" x="368" stroke-width="1.5" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_66" y="167" x="369" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">role-api-gateway</text>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_68" y2="275.023526" x2="430" y1="190" x1="430" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+  <line stroke-dasharray="5,2,2,2,2,2" stroke-linecap="null" stroke-linejoin="null" id="svg_70" y2="149" x2="200.922858" y1="149" x1="363" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_71" y2="585" x2="275" y1="189" x1="363" fill-opacity="null" stroke-opacity="null" stroke-dasharray="5,5" stroke-width="1.5" stroke="#000" fill="none"/>
+ </g>
+</svg>
