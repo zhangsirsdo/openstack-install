@@ -1,5 +1,5 @@
 
-The link of map between host and roles is here:[host_roles_map](HOST_ROLE_MAP.MD)
+The link of map between host and roles is here:[host_roles_map](HOST_ROLE_MAP.md)
 
 ### Roles 
  - Database Master/Slave(Mysql)
