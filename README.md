@@ -1,5 +1,5 @@
 
-The link of map between host and roles is here:[host_roles_map](https://github.com/luohao-brian/openstack-install/blob/master/HOST_ROLE_MAP.MD)
+The link of map between host and roles is here:[host_roles_map](HOST_ROLE_MAP.MD)
 
 ### Roles 
  - Database Master/Slave(Mysql)
