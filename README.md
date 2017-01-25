@@ -1,5 +1,6 @@
 
-The link of map between host and roles is here:[host_roles_map](HOST_ROLE_MAP.md)
+The relation of roles and services is as follow:
+![role_service_map](role_service_map.jpg)
 
 ### Roles 
  - Database Master/Slave(Mysql)
