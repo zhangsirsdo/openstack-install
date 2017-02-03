@@ -1,6 +1,6 @@
 
 The relation of roles and services is as follow:
-![role_service_map](role_service_map.jpg)
+![role_service_map](doc/role_service_map.jpg)
 
 ### Roles 
  - Database Master/Slave(Mysql)
