@@ -1,6 +1,14 @@
 #!/bin/bash
 # install mariadb and mariadb_setup container
 
+readValue(){
+  if [ "$1"x = "null"x ];then
+    echo $2
+  else
+    echo $1
+  fi
+}
+
 ADVERTISEMENT_URL=`cat ../global.conf |grep ADVERTISEMENT_URL|awk -F '=' '{print $2}'`
 ADVERTISEMENT_URL=${ADVERTISEMENT_URL:=127.0.0.1:2379}
 DB_HOST=${DB_HOST:=`echo $ADVERTISEMENT_URL|awk -F ':' '{print $1}'`}
@@ -21,14 +29,14 @@ NEUTRON_DB_PASS=`curl -L -XGET \
   http://$ADVERTISEMENT_URL/v2/keys/endpoints/mariadb/neutron|jq -r '.node.value'`
 CINDER_DB_PASS=`curl -L -XGET \
   http://$ADVERTISEMENT_URL/v2/keys/endpoints/mariadb/cinder_db_pass|jq -r '.node.value'`
-DB_PORT=${DB_PORT:=3306}
-DB_USER=${DB_USER:=root}
-DB_PASS=${DB_PASS:=root}
-KEYSTONE_DB_PASS=${KEYSTONE_DB_PASS:=$DB_PASS}
-GLANCE_DB_PASS=${GLANCE_DB_PASS:=$DB_PASS}
-NOVA_DB_PASS=${NOVA_DB_PASS:=$DB_PASS}
-NEUTRON_DB_PASS=${NEUTRON_DB_PASS:=$DB_PASS}
-CINDER_DB_PASS=${CINDER_DB_PASS:=$DB_PASS}
+DB_PORT=`readValue $DB_PORT "3306"`
+DB_USER=`readValue $DB_USER "root"`
+DB_PASS=`readValue $DB_PASS "root"`
+KEYSTONE_DB_PASS=`readValue $KEYSTONE_DB_PASS "root"`
+GLANCE_DB_PASS=`readValue $GLANCE_DB_PASS "root"`
+NOVA_DB_PASS=`readValue $NOVA_DB_PASS "root"`
+NEUTRON_DB_PASS=`readValue $NEUTRON_DB_PASS "root"`
+CINDER_DB_PASS=`readValue $CINDER_DB_PASS "root"`
 
 compose_path="/etc/docker_compose/"
 if [ ! -x "$compose_path" ]; then
