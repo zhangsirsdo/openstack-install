@@ -3,14 +3,21 @@ The relation of roles and services is as follow:
 ![role_service_map](doc/role_service_map.jpg)
 
 ### Roles 
- - Database Master/Slave(Mysql)
- - Message Queue Master/Slave(Rabbitmq)
- - Mongodb Master/Slave
- - Memcached
- - OpenStack Controller (Nova, Cinder, Keystone, Glance, Ceilometer)
- - OpenStack Compute Node
- - OpenStack Network Node
- - OpenStack Cinder Node
+ - Initiator:init container of system
+ - Etcd:used to storage configurations,discover service,check health status and cluster view
+ - API-Gateway:manage requests from outside
+ - Controller:role of controller,containing keystone,glance,nova-api,nova-scheduler,cinder-api,cinder-scheduler,etcd-peer and so on
+ - Network:role of network,containing neutron
+ - Storage:role of storage,containing cinder-volume
+ - Compute:role of compute,containing nova-compute,kinds of neutron agents and ceilometer agents
+ - Telemetry:role of telemetry,containing ceilometer and mongodb
+ - HAProxy:common HAProxy for other roles except api-gateway and log-broker
+ - Rabbitmq:Message Mueue Cluster
+ - Mariadb:Database Cluster
+ - Elastic-search:log search and analytics engine
+ - Log-indexer:Logstash Cluster
+ - Log-broker:Redis Cluster
+ - Web-interfaces:GUI of log and alert
 
 ### Prerequisites
  - A git service
@@ -22,17 +29,3 @@ The relation of roles and services is as follow:
  - Cluster peers will typically reuse 3 OpenStack Controller nodes;
  - Other nodes will use etcd client api to periodically update their status in config db;
 
-### Role Deployment
- - Admin is allowed to define the role for a node in config db; 
- - When a node is advertising itself in the cluster, it will pull its config and deloy them on its own;
-
-### Services Design
- - Etcd service, typically reuse 3 OpenStack Controller nodes as peers;
- - Nginx LB service, acting as API load balancer in front of OpenStack controller cluster;
- - Controller service, providing Nova, Cinder, Glance, Keystone, Ceilometer API services;
- - Database service, a failover mysql cluster, see https://dev.mysql.com/doc/refman/5.7/en/mysql-cluster-replication-failover.html;
- - Rabbitmq service, a failover rabbitmq cluster, see https://www.rabbitmq.com/clustering.html;
- - Memcached service, a memcahced cluster;
- - Mongodb service, a failover mongodb cluster, see https://docs.mongodb.com/manual/replication/;
- - Compute service, a set of compute nodes providing VMs;
- - Network service, providing vpc, fip, vrouter services;
